@@ -1,0 +1,11 @@
+<header class="mb-4 border-bottom">
+  <nav class="container py-3 d-flex align-items-center">
+    <%= link_to root_path, class: "me-4 d-flex align-items-center text-decoration-none" do %>
+      <%= image_tag "rails-logo.svg", alt: "Rails logo", width: "40", height: "40", class: "me-2" %>
+    <% end %>
+
+    <%= link_to "Home", root_path, class: "me-3 link-secondary text-decoration-none" %>
+    <%= link_to "Help", help_path, class: "me-3 link-secondary text-decoration-none" %>
+    <%= link_to "About", about_path, class: "link-secondary text-decoration-none" %>
+  </nav>
+</header>
