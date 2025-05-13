@@ -15,7 +15,16 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <%= yield %>
+    <div class="container mt-4">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key == 'success' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
 
     <%= render 'layouts/footer' %>
   </body>
