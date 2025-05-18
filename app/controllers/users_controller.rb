@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def show
+    @user = User.find(params[:id])
+  end
+
   def new
     @user = User.new
   end
@@ -7,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to root_url
+      redirect_to @user
     else
       render 'new', status: :unprocessable_entity
     end
