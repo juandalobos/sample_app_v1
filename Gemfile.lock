@@ -117,6 +117,10 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    importmap-rails (2.1.0)
+      actionpack (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -328,6 +332,9 @@ GEM
     thruster (0.1.13-x86_64-darwin)
     thruster (0.1.13-x86_64-linux)
     timeout (0.4.3)
+    turbo-rails (2.0.13)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -367,6 +374,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  importmap-rails
   kamal
   propshaft
   puma (>= 5.0)
@@ -379,6 +387,7 @@ DEPENDENCIES
   solid_queue
   sqlite3 (>= 2.1)
   thruster
+  turbo-rails
   tzinfo-data
   web-console
 

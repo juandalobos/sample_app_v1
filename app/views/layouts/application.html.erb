@@ -6,8 +6,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <!-- Bootstrap via CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap CSS sin integrity -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
@@ -17,7 +17,13 @@
 
     <div class="container mt-4">
       <% flash.each do |key, message| %>
-        <div class="alert alert-<%= key == 'success' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+        <% bs_class = case key %>
+          <% when "notice" then "info" %>
+          <% when "success" then "success" %>
+          <% when "error", "alert", "danger" then "danger" %>
+          <% else key %>
+        <% end %>
+        <div class="alert alert-<%= bs_class %> alert-dismissible fade show" role="alert">
           <%= message %>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -27,5 +33,12 @@
     </div>
 
     <%= render 'layouts/footer' %>
+
+    <!-- Importmap + aplicación -->
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", type: "module" %>
+
+    <!-- Bootstrap JS bundle sin integrity -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
   </body>
 </html>
