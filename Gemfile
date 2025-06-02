@@ -62,3 +62,9 @@ group :test do
   # Assert template support for controller tests
   gem "rails-controller-testing"
 end
+
+# Will_paginate para paginación
+gem 'will_paginate', '~> 3.3'
+
+#fake users
+gem 'faker', '~> 3.2'

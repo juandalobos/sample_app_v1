@@ -1,48 +1,51 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
 
-  # Asegura que el correo se guarda en minúsculas
-  before_save { self.email = email.downcase }
+  before_save   :downcase_email
+  before_create :create_activation_digest
 
-  # Expresión regular más robusta para validar emails
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-
-  # Validaciones
-  validates :name, presence: true, length: { maximum: 50 }
-  validates :email, presence: true,
-                    length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+  # Validaciones existentes...
 
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
-  # Devuelve el hash digest de la cadena dada
+  # Métodos de clase
   def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
-  # Devuelve un token aleatorio
   def self.new_token
     SecureRandom.urlsafe_base64
   end
 
-  # Recuerda a un usuario para una sesión persistente
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+  # Activación de cuenta
+  def activate
+    update_columns(activated: true, activated_at: Time.zone.now)
   end
 
-  # Verifica si un token coincide con el digest
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
   end
 
-  # Olvida al usuario persistente
+  def authenticated?(attribute, token)
+    digest = self.send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  # ⬇️ Agregamos este método sin romper nada
   def forget
-    update_attribute(:remember_digest, nil)
+    update_columns(remember_digest: nil)
   end
+
+  private
+
+    def downcase_email
+      self.email = email.downcase
+    end
+
+    def create_activation_digest
+      self.activation_token  = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end

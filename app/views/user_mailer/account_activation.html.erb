@@ -1,0 +1,6 @@
+<h1>Activate your account</h1>
+<p>Welcome to the Sample App, <%= @user.name %>!</p>
+<p>
+  Click the link below to activate your account:
+</p>
+<%= link_to "Activate", "http://example.com/account_activations/#{@user.activation_token}/edit?email=#{CGI.escape(@user.email)}" %>

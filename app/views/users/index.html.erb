@@ -1,0 +1,27 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+
+<div class="d-flex justify-content-center">
+  <%= will_paginate @users, class: "pagination" %>
+</div>
+
+<ul class="users list-unstyled mt-4">
+  <% @users.each do |user| %>
+    <li class="d-flex align-items-center my-3">
+      <%= gravatar_for user, size: 50 %>
+      <div class="ms-3">
+        <%= link_to user.name, user %>
+        <% if current_user.admin? && current_user != user %>
+          |
+          <%= link_to "delete", user, method: :delete,
+                        data: { confirm: "Are you sure?" },
+                        class: "text-danger small" %>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<div class="d-flex justify-content-center">
+  <%= will_paginate @users, class: "pagination" %>
+</div>

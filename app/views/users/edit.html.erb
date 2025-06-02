@@ -1,36 +1,28 @@
-<% provide(:title, "Edit user") %>
-<h1>Edit your profile</h1>
+<% provide(:title, "Editar usuario") %>
+<h1>Actualizar tu perfil</h1>
 
-<div class="row">
-  <div class="col-md-6 offset-md-3">
-    <%= form_with(model: @user, local: true) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+<%= form_with(model: @user, local: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
 
-      <div class="mb-3">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :email %>
-        <%= f.email_field :email, class: 'form-control' %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :password %>
-        <%= f.password_field :password, class: 'form-control', autocomplete: "new-password" %>
-        <small>(Leave blank if you don't want to change it)</small>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :password_confirmation, "Confirm Password" %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-
-      <%= f.submit "Save changes", class: "btn btn-primary" %>
-    <% end %>
-
-    <br>
-    <%= link_to "Back to profile", @user %>
+  <div class="mb-3">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
-</div>
+
+  <div class="mb-3">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "Confirmar contraseña" %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+
+  <%= f.submit "Guardar cambios", class: "btn btn-primary mt-3" %>
+<% end %>
