@@ -3,3 +3,10 @@ example_user:
   email: example@railstutorial.org
   password_digest: <%= User.digest('password') %>
   activated: true
+
+michael:
+  name: Michael Example
+  email: michael@example.com
+  password_digest: <%= User.digest('password') %>
+  activated: false
+  activation_digest: <%= User.digest(User.new_token) %>

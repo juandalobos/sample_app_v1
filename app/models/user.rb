@@ -33,7 +33,13 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-  # ⬇️ Agregamos este método sin romper nada
+  # Método para recordar usuario en sesión persistente
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  # Método para olvidar sesión persistente
   def forget
     update_columns(remember_digest: nil)
   end
