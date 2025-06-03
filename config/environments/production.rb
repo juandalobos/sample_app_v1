@@ -1,36 +1,6 @@
+# config/environments/production.rb
+
 Rails.application.configure do
-  config.cache_classes = true
-  config.eager_load = true
-  config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = true
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.assets.js_compressor = :uglifier
-  config.assets.compile = false
-  config.active_storage.service = :local
-  config.force_ssl = true
-
-  # ✅ Email configuration
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.sendgrid.net',
-    port:                 587,
-    domain:               'heroku.com',
-    user_name:            'apikey', # <- este valor literal
-    password:             ENV['SENDGRID_API_KEY'], # <- se almacena en Heroku
-    authentication:       'plain',
-    enable_starttls_auto: true
-  }
-
-  config.action_mailer.default_url_options = { host: 'your-app-name.herokuapp.com', protocol: 'https' }
-
-  config.log_level = :debug
-  config.log_tags = [ :request_id ]
-  config.cache_store = :memory_store
-  config.active_job.queue_adapter = :async
-  config.action_mailer.perform_caching = false
-  config.i18n.fallbacks = true
-  config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
@@ -40,4 +10,23 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
+
+  # 👇 Aquí empieza la config del mailer
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    address:              "smtp.sendgrid.net",
+    port:                 587,
+    domain:               "heroku.com",
+    user_name:            "apikey", # Fijo
+    password:             ENV["SENDGRID_API_KEY"],
+    authentication:       :plain,
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.default_url_options = {
+    host: "sample-app-v1-juanda-1f43c6a6ed77.herokuapp.com",
+    protocol: "https"
+  }
 end
