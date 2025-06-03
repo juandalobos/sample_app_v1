@@ -64,7 +64,7 @@ group :test do
 end
 
 # Will_paginate para paginación
-gem 'will_paginate', '~> 3.3'
+gem 'will_paginate', '~> 4.0'
 
 #fake users
 gem 'faker', '~> 3.2'
