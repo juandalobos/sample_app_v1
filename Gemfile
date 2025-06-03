@@ -12,9 +12,10 @@ gem "faker", "~> 3.2"
 
 group :development, :test do
   gem "sqlite3", ">= 2.1"
-  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
+  gem "debug", platforms: [:mri]
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
+  gem "faker", "~> 3.2"  # 👈 ESTA es la que debe quedar
 end
 
 group :development do
