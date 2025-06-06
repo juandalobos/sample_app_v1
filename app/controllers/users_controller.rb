@@ -40,11 +40,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
-    if user.destroy
+    @user = User.find(params[:id])
+    if current_user.admin? && current_user != @user
+      @user.destroy
       flash[:success] = "User deleted"
     else
-      flash[:danger] = "User could not be deleted"
+      flash[:danger] = "You can't delete this user"
     end
     redirect_to users_url
   end
