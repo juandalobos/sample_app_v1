@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_02_155931) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_07_211019) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -22,5 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_155931) do
     t.boolean "activated", default: false
     t.datetime "activated_at"
     t.boolean "admin"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
   end
 end
