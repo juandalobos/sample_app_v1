@@ -25,11 +25,11 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
-  gem "rails-controller-testing"
+  
 end
 
 group :production do
   gem "pg"
 end
-
+gem "rails-controller-testing"
 gem "tzinfo-data", platforms: %i[windows jruby]
