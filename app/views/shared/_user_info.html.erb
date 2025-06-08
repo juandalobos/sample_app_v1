@@ -1,3 +1,3 @@
-<%= gravatar_for current_user, class: "gravatar mb-2" %>
+<%= image_tag gravatar_for(current_user), class: "gravatar mb-2" %>
 <h4><%= current_user.name %></h4>
 <span><%= pluralize(current_user.microposts.count, "micropost") %></span>
