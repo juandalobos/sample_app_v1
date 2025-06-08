@@ -7,7 +7,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
 gem "importmap-rails"
 gem "turbo-rails"
-gem "will_paginate", "~> 3.3"
+gem "will_paginate", "~> 4.0"
 gem "faker", "~> 3.2"
 
 group :development, :test do
