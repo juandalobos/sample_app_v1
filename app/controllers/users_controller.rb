@@ -68,8 +68,10 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
+      unless current_user?(@user)
+        flash[:danger] = "You are not authorized to edit this profile."
+        redirect_to(root_url)
+      end
 
     def admin_user
       redirect_to(root_url) unless current_user.admin?
