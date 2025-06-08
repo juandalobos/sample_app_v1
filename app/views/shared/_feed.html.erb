@@ -1,0 +1,12 @@
+<% if @feed_items.any? %>
+  <ol class="microposts list-unstyled">
+    <% @feed_items.each do |micropost| %>
+      <li id="micropost-<%= micropost.id %>">
+        <%= micropost.content %>
+        <small class="text-muted">Posted <%= time_ago_in_words(micropost.created_at) %> ago</small>
+      </li>
+    <% end %>
+  </ol>
+<% else %>
+  <p>No microposts yet.</p>
+<% end %>
