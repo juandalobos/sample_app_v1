@@ -1,4 +1,19 @@
 <% provide(:title, @user.name) %>
+
 <h1><%= @user.name %></h1>
 <%= gravatar_for @user %>
-<%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-secondary" %>
+
+<%# — Botón Follow/Unfollow (solo si no es tu propio perfil) — %>
+<% unless current_user == @user %>
+  <div id="follow_form">
+    <%= render 'relationships/form' %>
+  </div>
+<% end %>
+
+<%# — Link de edición (solo en tu propio perfil) — %>
+<% if current_user == @user %>
+  <%= link_to "Edit Profile", edit_user_path(@user),
+              class: "btn btn-secondary" %>
+<% end %>
+
+<%# — Aquí seguiría el código para mostrar stats y microposts… — %>

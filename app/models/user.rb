@@ -6,18 +6,32 @@ class User < ApplicationRecord
 
   has_many :microposts, dependent: :destroy
 
+  # Relaciones de “seguir / ser seguido”
+  has_many :active_relationships,
+           class_name:  "Relationship",
+           foreign_key: "follower_id",
+           dependent:   :destroy
+  has_many :passive_relationships,
+           class_name:  "Relationship",
+           foreign_key: "followed_id",
+           dependent:   :destroy
+  has_many :following, through: :active_relationships,  source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
+
   # Validaciones del modelo...
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
-                    format: { with: VALID_EMAIL_REGEX },
+                    format:   { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   # -------- Métodos para autenticación, tokens, etc. --------
   def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    cost = ActiveModel::SecurePassword.min_cost ?
+             BCrypt::Engine::MIN_COST :
+             BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
@@ -62,9 +76,22 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # --> Este es el método feed que necesitas para el home:
+  # Método feed para el home
   def feed
     Micropost.where("user_id = ?", id)
+  end
+
+  # Métodos para seguir / dejar de seguir usuarios
+  def follow(other_user)
+    active_relationships.create(followed_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id)&.destroy
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
   end
 
   private
