@@ -1,3 +1,17 @@
-<%= gravatar_for current_user, class: "gravatar mb-2" %>
-<h4><%= current_user.name %></h4>
-<span><%= pluralize(current_user.microposts.count, "micropost") %></span>
+<div class="card mb-3">
+  <div class="card-body text-center">
+    <%= gravatar_for current_user, size: 80, class: "img-fluid rounded-circle mb-2" %>
+    <h4 class="card-title mb-1"><%= current_user.name %></h4>
+    <p class="card-text mb-2">
+      <%= pluralize(current_user.microposts.count, "micropost") %>
+    </p>
+    <p class="card-text">
+      <%= link_to following_user_path(current_user), class: "text-decoration-none me-3" do %>
+        <strong>Siguiendo:</strong> <%= current_user.following.count %>
+      <% end %>
+      <%= link_to followers_user_path(current_user), class: "text-decoration-none" do %>
+        <strong>Seguidores:</strong> <%= current_user.followers.count %>
+      <% end %>
+    </p>
+  </div>
+</div>
